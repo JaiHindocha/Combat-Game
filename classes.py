@@ -253,11 +253,11 @@ class EnemyRace:
 
 class Dragon(EnemyRace):
 	def __init__(self):
-		super().__init__(15,400,2)
+		super().__init__(10,400,2)
 
 class Orc(EnemyRace):
 	def __init__(self):
-		super().__init__(10,300,4)
+		super().__init__(7,300,4)
 
 
 #####################################################

@@ -120,9 +120,6 @@ class Giant(PlayerRace):
 		super().__init__(8,0,150,0)
 
 
-#####################################################
-
-
 class Weapon:
 	def __init__(self, damage, speed,block):
 		self._DamageBoost = damage
@@ -163,11 +160,6 @@ class BattleAxe(Weapon):
 class Fire(Weapon):
 	def __init__(self):
 		super().__init__(random.randint(6,10),1,0)
-
-
-
-
-#####################################################
 
 
 class Player:
@@ -236,7 +228,6 @@ Races:
 	def getAttack(self):
 		return self._damage
 
-#####################################################
 
 
 class EnemyRace:
@@ -259,8 +250,6 @@ class Orc(EnemyRace):
 	def __init__(self):
 		super().__init__(7,300,4)
 
-
-#####################################################
 
 
 class Enemy:
@@ -337,8 +326,6 @@ class Enemy:
 		return self._Speed
 
 
-#####################################################
-
 def chooseClass():
 		print("""
 Races:
@@ -362,7 +349,6 @@ Races:
 
 		return _class,weapon
 
-#####################################################
 
 _class,weapon = chooseClass()
 
@@ -380,56 +366,58 @@ enemy.displayStats()
 enemyAttack = enemy.getAttack()
 enemySpeed = enemy.getSpeed()
 
+def combat():
+	while user.getHealth() > 0 and enemy.getHealth() > 0:
+		enemyTurn = enemy.Turn()
+		enemyHealth = enemy.getHealth()
+		userTurn = user.Turn()
+		userHealth = user.getHealth()
 
-while user.getHealth() > 0 and enemy.getHealth() > 0:
-	enemyTurn = enemy.Turn()
-	enemyHealth = enemy.getHealth()
-	userTurn = user.Turn()
-	userHealth = user.getHealth()
+		if enemyTurn == 'a' and userTurn == 'a':
+			enemyHealth -= userAttack * userSpeed
+			enemy.setHealth(enemyHealth)
+			userHealth -= enemyAttack * enemySpeed
+			user.setHealth(userHealth)
+			print("THE ENEMY ATTACKED!")
+			print("You took",enemyAttack * enemySpeed,'damage')
+			print("The enemy took",userAttack * userSpeed,'damage')
 
-	if enemyTurn == 'a' and userTurn == 'a':
-		enemyHealth -= userAttack * userSpeed
-		enemy.setHealth(enemyHealth)
-		userHealth -= enemyAttack * enemySpeed
-		user.setHealth(userHealth)
-		print("THE ENEMY ATTACKED!")
-		print("You took",enemyAttack * enemySpeed,'damage')
-		print("The enemy took",userAttack * userSpeed,'damage')
+		elif enemyTurn == 'a' and userTurn == 'b':
+			userHealth -= 10
+			user.setHealth(userHealth)
+			print("THE ENEMY ATTACKED!")
+			print("You took 10 damage")
 
-	elif enemyTurn == 'a' and userTurn == 'b':
-		userHealth -= 10
-		user.setHealth(userHealth)
-		print("THE ENEMY ATTACKED!")
-		print("You took 10 damage")
+		elif enemyTurn == 'a' and userTurn == 'h':
+			userHealth -= enemyAttack * enemySpeed
+			user.setHealth(userHealth)
+			print("THE ENEMY ATTACKED!")
+			print("You took",enemyAttack * enemySpeed,'damage')
+			print("The enemy took 0 damage")
 
-	elif enemyTurn == 'a' and userTurn == 'h':
-		userHealth -= enemyAttack * enemySpeed
-		user.setHealth(userHealth)
-		print("THE ENEMY ATTACKED!")
-		print("You took",enemyAttack * enemySpeed,'damage')
-		print("The enemy took 0 damage")
+		elif enemyTurn == 'b' and userTurn == 'a':
+			enemyHealth -= 10
+			enemy.setHealth(enemyHealth)
+			print("THE ENEMY BLOCKED!")
+			print("You took 0 damage")
+			print("The enemy took 10 damage")
 
-	elif enemyTurn == 'b' and userTurn == 'a':
-		enemyHealth -= 10
-		enemy.setHealth(enemyHealth)
-		print("THE ENEMY BLOCKED!")
-		print("You took 0 damage")
-		print("The enemy took 10 damage")
+		elif enemyTurn == 'b' and userTurn == 'h':
+			userHealth += userHeal
+			user.setHealth(userHealth)
+			print("THE ENEMY BLOCKED!")
+			print("You gained",userHeal,"health")
+		else:
+			print("YOU AND THE ENEMY BOTH BLOCKED!")
 
-	elif enemyTurn == 'b' and userTurn == 'h':
-		userHealth += userHeal
-		user.setHealth(userHealth)
-		print("THE ENEMY BLOCKED!")
-		print("You gained",userHeal,"health")
-	else:
-		print("YOU AND THE ENEMY BOTH BLOCKED!")
-
-	print("\n")
-	if user.getHealth() > 0 and enemy.getHealth() > 0:
-		print("Your health:",userHealth)
-		print("Enemy health:",enemyHealth)
 		print("\n")
-	elif user.getHealth() > 0 and enemy.getHealth() < 0:
-		print("YOU WIN!!!")
-	else:
-		print("YOU LOSE!!!")
+		if user.getHealth() > 0 and enemy.getHealth() > 0:
+			print("Your health:",userHealth)
+			print("Enemy health:",enemyHealth)
+			print("\n")
+		elif user.getHealth() < 0 and enemy.getHealth() < 0:
+			print("YOU BOTH TIE!!!")
+		elif user.getHealth() > 0 and enemy.getHealth() < 0:
+			print("YOU WIN!!!")
+		else:
+			print("YOU LOSE!!!")

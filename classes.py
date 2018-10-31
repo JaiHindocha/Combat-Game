@@ -87,9 +87,6 @@ Weapons Available:
 			return Bow()
 
 
-#####################################################
-
-
 
 class PlayerRace:
 	def __init__(self,attack,speed,health,heal):

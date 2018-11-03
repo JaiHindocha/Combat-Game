@@ -9,7 +9,7 @@ The program will display your stats and the enemy's stats.
 
 As the player, you can then choose to attack, block or heal.
 Healing depends on your class.
-Block reduces all attack damage taken to 10
+Block reduces all attack damage taken to 10.
 Attack will attack the enemy, but you can still take damage if then attacks you at the same time.
 
 THE LAST ONE STANDING WINS!
